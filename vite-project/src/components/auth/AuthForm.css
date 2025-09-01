@@ -1,0 +1,208 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #f5f7fa 0% );
+  padding: 20px;
+}
+
+
+/* #c3cfe2 100% */
+
+.auth-card {
+  width: 100%;
+  max-width: 600px; /* Increased from 500px to make it much wider */
+  padding: 3rem; /* Increased padding for more spacious feel */
+  background-color: #ffffff;
+  border-radius: 16px; /* Slightly larger radius for softer look */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.auth-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: #2c3e50;
+  letter-spacing: 0.5px;
+}
+
+.auth-card input,
+.auth-card select {
+  width: 100%;
+  padding: 1.1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 1.05rem;
+  background: #f9f9f9;
+  color: #555;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.auth-card input:focus,
+.auth-card select:focus {
+  border-color: #4a90e2;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2);
+  transform: translateY(-2px);
+}
+
+.auth-card input.error,
+.auth-card select.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2);
+}
+
+.auth-card button {
+  width: 100%;
+  padding: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to right, #4a90e2, #357abd);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(74, 144, 226, 0.4);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  margin-top: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.auth-card button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.5);
+}
+
+.auth-card p {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #777;
+}
+
+.auth-card a,
+.auth-card span {
+  color: #4a90e2;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.auth-card a:hover,
+.auth-card span:hover {
+  color: #357abd;
+  text-decoration: underline;
+}
+
+/* Phone input container */
+.phone-input-container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.phone-code-select {
+  width: 35% !important;
+  font-size: 1rem;
+}
+
+.phone-number-input {
+  width: 65% !important;
+}
+
+/* Error message styling */
+.error-message {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: -1rem;
+  margin-bottom: 1.2rem;
+  padding-left: 0.8rem;
+  font-weight: 500;
+}
+
+/* Form group styling for better spacing */
+.form-group {
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 650px) {
+  .auth-card {
+    max-width: 90%;
+    padding: 2rem;
+  }
+  
+  .phone-input-container {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .phone-code-select,
+  .phone-number-input {
+    width: 100% !important;
+  }
+}
+
+
+
+/* Add to existing styles */
+.auth-card input.error,
+.auth-card select.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
