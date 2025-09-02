@@ -6,7 +6,7 @@ const Profile = () => {
   return (
     <AppLayout role="researcher">
       <h2>Profile</h2>
-      <p>View and edit your personal information here.</p>
+      <p>View and edit your personal information here.hssssssssssssssssmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmssssssssssssssssssssssssssssssssssssssss</p>
       {/* You can add profile form inputs here */}
     </AppLayout>
   );

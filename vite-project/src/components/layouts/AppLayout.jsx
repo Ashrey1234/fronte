@@ -290,12 +290,106 @@
 
 
 
+//                    now
+// // src/components/layouts/AppLayout.jsx
+// import React, { useState } from "react";
+// import Sidebar from "./Sidebar";
+// import Header from "./Header";
+// import Footer from "./Footer";
 
-// src/components/layouts/AppLayout.jsx
+// const AppLayout = ({ children, role = "researcher", user, onLogout }) => {
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+//   const toggleSidebar = () => {
+//     setSidebarOpen(!sidebarOpen);
+//   };
+
+//   return (
+//     <div style={{ display: "flex", minHeight: "100vh", width: "100vw", overflow: "hidden" }}>
+//       {/* Sidebar with overlay for mobile */}
+//       <div 
+//         className={`sidebar-overlay ${sidebarOpen ? 'active' : ''}`} 
+//         onClick={toggleSidebar}
+//       />
+      
+//       {/* Sidebar */}
+//       <Sidebar role={role} isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      
+//       {/* Main Content Area */}
+//       <div style={{ 
+//         flex: 1, 
+//         display: "flex", 
+//         flexDirection: "column", 
+//         minHeight: "100vh",
+//         width: '100%',
+//         marginLeft: 0,
+//         transition: 'margin-left 0.3s ease'
+//       }}>
+//         {/* Header */}
+//         <Header 
+//           role={role} 
+//           toggleSidebar={toggleSidebar} 
+//           user={user} 
+//           onLogout={onLogout} 
+//         />
+
+//         {/* Page content */}
+//         <main style={{ 
+//           flex: 1, 
+//           padding: "20px", 
+//           background: "#f9f9f9",
+//           overflowY: 'auto'
+//         }}>
+//           {children}
+//         </main>
+
+//         {/* Footer */}
+//         <Footer />
+//       </div>
+
+//       <style jsx>{`
+//         .sidebar-overlay {
+//           display: none;
+//           position: fixed;
+//           top: 0;
+//           left: 0;
+//           right: 0;
+//           bottom: 0;
+//           background-color: rgba(0, 0, 0, 0.5);
+//           z-index: 998;
+//         }
+        
+//         @media (max-width: 768px) {
+//           .sidebar-overlay.active {
+//             display: block;
+//           }
+//         }
+//       `}</style>
+//     </div>
+//   );
+// };
+
+// export default AppLayout;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Footer from "./Footer";
+import "./AppLayout.css";
 
 const AppLayout = ({ children, role = "researcher", user, onLogout }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -305,8 +399,8 @@ const AppLayout = ({ children, role = "researcher", user, onLogout }) => {
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", width: "100vw", overflow: "hidden" }}>
-      {/* Sidebar with overlay for mobile */}
+    <div className="app-layout">
+      {/* Sidebar overlay for mobile */}
       <div 
         className={`sidebar-overlay ${sidebarOpen ? 'active' : ''}`} 
         onClick={toggleSidebar}
@@ -315,17 +409,8 @@ const AppLayout = ({ children, role = "researcher", user, onLogout }) => {
       {/* Sidebar */}
       <Sidebar role={role} isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       
-      {/* Main Content Area */}
-      <div style={{ 
-        flex: 1, 
-        display: "flex", 
-        flexDirection: "column", 
-        minHeight: "100vh",
-        width: '100%',
-        marginLeft: 0,
-        transition: 'margin-left 0.3s ease'
-      }}>
-        {/* Header */}
+      {/* Main Content */}
+      <div className="main-content">
         <Header 
           role={role} 
           toggleSidebar={toggleSidebar} 
@@ -333,38 +418,12 @@ const AppLayout = ({ children, role = "researcher", user, onLogout }) => {
           onLogout={onLogout} 
         />
 
-        {/* Page content */}
-        <main style={{ 
-          flex: 1, 
-          padding: "20px", 
-          background: "#f9f9f9",
-          overflowY: 'auto'
-        }}>
+        <main className="page-content">
           {children}
         </main>
 
-        {/* Footer */}
         <Footer />
       </div>
-
-      <style jsx>{`
-        .sidebar-overlay {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: rgba(0, 0, 0, 0.5);
-          z-index: 998;
-        }
-        
-        @media (max-width: 768px) {
-          .sidebar-overlay.active {
-            display: block;
-          }
-        }
-      `}</style>
     </div>
   );
 };
