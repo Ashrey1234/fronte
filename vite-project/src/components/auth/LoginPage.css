@@ -1,0 +1,140 @@
+/* LoginPage.css */
+
+/* Container for the page */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f4f6f8;
+  padding: 20px;
+}
+
+/* Card that holds the login form */
+.auth-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo and welcome message */
+.auth-card .logo-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-card .logo-container img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.auth-card .logo-container h2 {
+  color: #4a90e2;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.auth-card .logo-container h1 {
+  color: #2c3e50;
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Error message */
+.auth-form .error-message {
+  color: red;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Input wrapper to position icon */
+.input-wrapper {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+
+.input-wrapper svg {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  z-index: 1;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 10px 15px;
+  padding-left: 45px; /* space for the icon */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.input-wrapper input:focus {
+  border-color: #4a90e2;
+}
+
+/* Forgot password link */
+.forgot-password {
+  text-align: right;
+  margin: -10px 0 15px 0;
+}
+
+.forgot-password a {
+  color: #4a90e2;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Login button */
+.auth-button {
+  background: #4a90e2;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.auth-button:hover {
+  background: #357ab8;
+}
+
+/* Register link */
+.auth-card p {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.auth-card p a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.auth-card p a:hover {
+  text-decoration: underline;
+}

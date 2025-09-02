@@ -23,25 +23,71 @@
 
 
 
-// src/components/layouts/Footer.jsx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                  now
+
+// // src/components/layouts/Footer.jsx
+// import React from "react";
+
+// const Footer = () => {
+//   return (
+//   <footer
+//   style={{
+//     padding: "15px 20px",
+//     background: "#1CA3DE",
+//     textAlign: "center",
+//     borderTop: "1px solid #ddd",
+//     color: "#ffff",
+//     fontSize: "0.9rem",
+//     fontWeight: "bold"
+//   }}
+// >
+//       &copy; {new Date().getFullYear()} Research Management System. All rights reserved.
+//     </footer>
+//   );
+// };
+
+// export default Footer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from "react";
+import "./Footer.css"; // ✅ import CSS
 
 const Footer = () => {
   return (
-  <footer
-  style={{
-    padding: "15px 20px",
-    background: "#1CA3DE",
-    textAlign: "center",
-    borderTop: "1px solid #ddd",
-    color: "#ffff",
-    fontSize: "0.9rem",
-    fontWeight: "bold"
-  }}
->
+    <footer className="footer">
       &copy; {new Date().getFullYear()} Research Management System. All rights reserved.
     </footer>
   );
 };
 
 export default Footer;
+
+

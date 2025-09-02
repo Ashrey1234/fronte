@@ -1,0 +1,92 @@
+/* RegisterPage.css */
+
+/* Container for the form */
+.auth-form-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Input wrapper with icon */
+.input-with-icon {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  z-index: 1;
+}
+
+/* Input fields and selects */
+.input-with-icon input,
+.input-with-icon select {
+  width: 100%;
+  padding: 12px 12px 12px 40px; /* left padding for icon */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input-with-icon input:focus,
+.input-with-icon select:focus {
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+/* Error state */
+.error {
+  border-color: #e74c3c !important;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  text-align: left;
+  width: 100%;
+}
+
+/* Bottom link */
+.auth-form-container p {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.auth-form-container p span {
+  color: #4a90e2;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.auth-form-container p span:hover {
+  text-decoration: underline;
+}
+
+/* Phone input flex wrapper */
+.phone-input-wrapper {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+}
+
+.phone-input-wrapper select {
+  width: 30%;
+}
+
+.phone-input-wrapper input {
+  width: 70%;
+}
