@@ -1,0 +1,152 @@
+/* src/pages/researcher/TemplatesSection.css */
+.templates-section {
+  margin: 40px auto 0;
+  max-width: 1400px;
+  padding: 0 30px;
+  transition: margin-left 0.3s ease;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #2d3748;
+}
+
+.templates-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1300px;
+}
+
+.template-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 320px;
+  min-width: 0; /* Prevents flex items from overflowing */
+  box-sizing: border-box;
+}
+
+.template-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.template-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #2d3748;
+}
+
+.template-description {
+  font-size: 14px;
+  color: #4a5568;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  text-align: left;
+  flex-grow: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 4; */
+  -webkit-box-orient: vertical;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.btn.pdf {
+  background-color: #e6f2ff;
+  color: #1CA3DE;
+  border: 1px solid #c5d9f1;
+}
+
+.btn.pdf:hover {
+  background-color: #1CA3DE;
+  color: white;
+}
+
+.icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.icon-wrapper svg:first-child {
+  margin-right: 2px;
+}
+
+.icon-wrapper svg:last-child {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn.pdf:hover .icon-wrapper svg:last-child {
+  background: #1CA3DE;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .templates-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .templates-section {
+    padding: 0 20px;
+  }
+
+  .templates-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .templates-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+
+  .template-card {
+    height: auto;
+    min-height: 250px;
+  }
+}
+  
