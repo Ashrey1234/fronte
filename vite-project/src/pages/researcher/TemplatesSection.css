@@ -1,4 +1,4 @@
-/* src/pages/researcher/TemplatesSection.css */
+src/pages/researcher/TemplatesSection.css
 .templates-section {
   margin: 40px auto 0;
   max-width: 1400px;
@@ -45,24 +45,28 @@
 }
 
 .template-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   margin-bottom: 15px;
   color: #2d3748;
+
 }
 
 .template-description {
-  font-size: 14px;
-  color: #4a5568;
+  font-size: 16px;
+  color: black;
   line-height: 1.5;
   margin-bottom: 20px;
   text-align: left;
   flex-grow: 1;
   overflow: hidden;
   display: -webkit-box;
+  font-weight: 500;
   /* -webkit-line-clamp: 4; */
   -webkit-box-orient: vertical;
 }
+
+/* #4a5568 */
 
 .buttons {
   display: flex;
