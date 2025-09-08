@@ -1,113 +1,30 @@
-
-
-
-.submit-application-container {
-  font-family: Arial, sans-serif;
-  max-width: 800px; /* Constrains the width to avoid overflow */
-  margin: 0 auto; /* Centers the container horizontally */
-  padding: 20px; /* Adds padding to prevent content from touching edges */
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-}
-
-.section {
-  margin-bottom: 30px;
-}
-
-h2 {
-  color: #444;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-input,
-select {
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
+/* SubmitApplication.css */
+.attachment-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
-  width: 100%; /* Ensures inputs take full width of the form */
-  box-sizing: border-box; /* Includes padding in width calculation */
-}
-
-button {
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: auto; /* Allows button to size naturally */
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.application {
-  border: 1px solid #ccc;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  width: 100%; /* Ensures application boxes fit within container */
-}
-
-.application h3 {
-  margin: 0 0 10px;
-  color: #333;
-}
-
-.application p {
-  margin: 5px 0;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.error {
-  color: red;
-  font-weight: bold;
-}
-
-.success {
-  color: green;
-  font-weight: bold;
-}
-
-ul {
-  list-style: none;
   padding: 0;
 }
 
-li {
-  margin-bottom: 10px;
+.attachment-item {
+  border-bottom: 1px solid #e0e0e0;
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
-  .submit-application-container {
-    padding: 10px;
-    max-width: 100%; /* Full width on small screens */
-  }
+.attachment-item:last-child {
+  border-bottom: none;
+}
 
-  .application {
-    padding: 10px;
-  }
+.upload-section {
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
 
-  input,
-  select {
-    font-size: 14px;
-  }
+.step-container {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #fafafa;
 }
