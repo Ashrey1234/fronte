@@ -91,3 +91,37 @@
     display: block !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Header.css */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  position: fixed;    /* from relative → fixed */
+  top: 0;
+  left: 320px;        /* nafasi ya sidebar */
+  right: 0;
+  height: 60px;
+  z-index: 1000;
+}
+

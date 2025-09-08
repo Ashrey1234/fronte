@@ -1,2131 +1,237 @@
-// src/pages/researcher/SubmitApplication.jsx
-// import React from "react";
+
+
+
+
+
+
+
+
+
+
+// import React, { useEffect, useState } from "react";
+// import { FaExclamationTriangle, FaCheckCircle } from "react-icons/fa";
 // import AppLayout from "../../components/layouts/AppLayout";
+// import "./SubmitApplication.css";
 
-// const SubmitApplication = () => {
-//   return (
-//     <AppLayout role="researcher">
-//       <h2>Submit Application</h2>
-//       <p>Upload your research proposal, Makamu Form, and Ethical Form here.</p>
-//       {/* You can add form component or file upload inputs later */}
-//     </AppLayout>
-//   );
-// };
+// const API_BASE_URL = "http://127.0.0.1:8000";
 
-// export default SubmitApplication;
+// const SubmitApplication = ({ applicationId }) => {
+//   const [application, setApplication] = useState(null);
+//   const [attachments, setAttachments] = useState([]);
+//   const [fileType, setFileType] = useState("Proposal");
+//   const [file, setFile] = useState(null);
+//   const [loading, setLoading] = useState(false);
+//   const [message, setMessage] = useState("");
+//   const [error, setError] = useState("");
 
-
-
-
-// import React, { useState } from 'react';
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css'; // CSS file ya component hii
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const Dashboard = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     formMakomRais: null,
-//     formClearance: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   const handleChange = (e) => {
-//     const { name, value, files } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
+//   // Refresh token function
+//   const refreshToken = async () => {
+//     const refresh = localStorage.getItem("refresh");
+//     if (!refresh) {
+//       window.location.href = "/login";
+//       return null;
 //     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const data = new FormData();
-//     for (const key in formData) {
-//       if (formData[key]) data.append(key, formData[key]);
-//     }
-
 //     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
+//       const res = await fetch(`${API_BASE_URL}/api/token/refresh/`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ refresh }),
 //       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-//       console.log(result);
-
-//       setFormData({
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: '',
-//         photo: null,
-//         proposal: null,
-//         formMakomRais: null,
-//         formClearance: null
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
-//     }
-//   };
-
-//   return (
-//     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
-
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
-//           </div>
-//         )}
-
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} required />
-//           <input type="text" name="typeOfResearch" placeholder="Type of Research" value={formData.typeOfResearch} onChange={handleChange} required />
-//           <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
-
-//           <select name="role" value={formData.role} onChange={handleChange} required>
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => <option key={role} value={role}>{role}</option>)}
-//           </select>
-
-//           <input type="file" name="photo" accept=".pdf" onChange={handleChange} required />
-//           <input type="file" name="proposal" accept=".pdf" onChange={handleChange} required />
-//           <input type="file" name="formMakomRais" accept=".pdf" onChange={handleChange} required />
-//           <input type="file" name="formClearance" accept=".pdf" onChange={handleChange} required />
-
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </AppLayout>
-//   );
-// };
-
-// export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css';
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const SubmitApplication = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     formMakomRais: null,
-//     formClearance: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   const handleChange = (e) => {
-//     const { name, value, files } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     // Check if all required files are uploaded
-//     const requiredFiles = ['photo', 'proposal', 'formMakomRais', 'formClearance'];
-//     for (const file of requiredFiles) {
-//       if (!formData[file]) {
-//         setStatusMessage(`Please upload your ${file}`);
-//         return;
+//       const data = await res.json();
+//       if (data.access) {
+//         localStorage.setItem("access", data.access);
+//         return data.access;
+//       } else {
+//         throw new Error("Failed to refresh token");
 //       }
-//     }
-
-//     const data = new FormData();
-//     for (const key in formData) {
-//       if (formData[key]) data.append(key, formData[key]);
-//     }
-
-//     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
-//       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-//       console.log(result);
-
-//       // Clear form
-//       setFormData({
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: '',
-//         photo: null,
-//         proposal: null,
-//         formMakomRais: null,
-//         formClearance: null
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
+//     } catch (err) {
+//       console.error(err);
+//       window.location.href = "/login";
+//       return null;
 //     }
 //   };
 
-//   // Function to show file info
-//   const renderFileInfo = (file) => {
-//     if (!file) return <span className="file-info">No file selected</span>;
-//     return <span className="file-info">{file.name} ({(file.size / 1024).toFixed(2)} KB)</span>;
-//   };
-
-//   return (
-//     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
-
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
-//           </div>
-//         )}
-
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} required />
-//           <input type="text" name="typeOfResearch" placeholder="Type of Research" value={formData.typeOfResearch} onChange={handleChange} required />
-//           <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
-
-//           <select name="role" value={formData.role} onChange={handleChange} required>
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => <option key={role} value={role}>{role}</option>)}
-//           </select>
-
-//           <div className="file-upload">
-//             <label>Upload Photo (PDF)</label>
-//             <input type="file" name="photo" accept=".pdf" onChange={handleChange} />
-//             {renderFileInfo(formData.photo)}
-//           </div>
-
-//           <div className="file-upload">
-//             <label>Upload Proposal (PDF)</label>
-//             <input type="file" name="proposal" accept=".pdf" onChange={handleChange} />
-//             {renderFileInfo(formData.proposal)}
-//           </div>
-
-//           <div className="file-upload">
-//             <label>Form from Makom a Rais (PDF)</label>
-//             <input type="file" name="formMakomRais" accept=".pdf" onChange={handleChange} />
-//             {renderFileInfo(formData.formMakomRais)}
-//           </div>
-
-//           <div className="file-upload">
-//             <label>Form of Clearance (PDF)</label>
-//             <input type="file" name="formClearance" accept=".pdf" onChange={handleChange} />
-//             {renderFileInfo(formData.formClearance)}
-//           </div>
-
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </AppLayout>
-//   );
-// };
-
-// export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 
-
-
-
-
-
-// import React, { useState } from 'react';
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css';
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const FILE_LABELS = {
-//   photo: "Passport Size Photo (Image)",
-//   proposal: "Research Proposal (PDF)",
-//   formVicePresident: "Form Vice President (PDF)",
-//   formClearance: "Ethical Clearance Form (PDF)"
-// };
-
-// const SubmitApplication = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     formVicePresident: null,
-//     formClearance: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   const handleChange = (e) => {
-//     const { name, files, value } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const requiredFiles = ['photo', 'proposal', 'formVicePresident', 'formClearance'];
-//     for (const file of requiredFiles) {
-//       if (!formData[file]) {
-//         setStatusMessage(`Please upload your ${FILE_LABELS[file]}`);
-//         return;
-//       }
-//     }
-
-//     const data = new FormData();
-//     for (const key in formData) {
-//       if (formData[key]) data.append(key, formData[key]);
-//     }
-
-//     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
-//       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-//       console.log(result);
-
-//       // Reset form
-//       setFormData({
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: '',
-//         photo: null,
-//         proposal: null,
-//         formVicePresident: null,
-//         formClearance: null
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
-//     }
-//   };
-
-//   const renderFileInfo = (file) => {
-//     if (!file) return <span className="file-info">No file selected</span>;
-//     return <span className="file-info">{file.name} ({(file.size / 1024).toFixed(2)} KB)</span>;
-//   };
-
-//   return (
-//     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
-
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
-//           </div>
-//         )}
-
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input 
-//             type="text" 
-//             name="fullName" 
-//             placeholder="Full Name" 
-//             value={formData.fullName} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="typeOfResearch" 
-//             placeholder="Type of Research" 
-//             value={formData.typeOfResearch} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="title" 
-//             placeholder="Title" 
-//             value={formData.title} 
-//             onChange={handleChange} 
-//             required 
-//           />
-
-//           <select 
-//             name="role" 
-//             value={formData.role} 
-//             onChange={handleChange} 
-//             required
-//           >
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => (
-//               <option key={role} value={role}>{role}</option>
-//             ))}
-//           </select>
-
-//           {/* File Uploads */}
-//           {Object.keys(FILE_LABELS).map(key => (
-//             <div className="file-upload" key={key}>
-//               <h4 className="file-title">{FILE_LABELS[key]}</h4>
-
-//               {key === "photo" ? (
-//                 <>
-//                   <input 
-//                     type="file" 
-//                     name={key} 
-//                     accept="image/*" 
-//                     onChange={handleChange} 
-//                   />
-//                   {formData.photo ? (
-//                     <div className="passport-preview">
-//                       <img src={URL.createObjectURL(formData.photo)} alt="Passport Preview" />
-//                     </div>
-//                   ) : (
-//                     <span className="file-info">No file selected</span>
-//                   )}
-//                 </>
-//               ) : (
-//                 <>
-//                   <input 
-//                     type="file" 
-//                     name={key} 
-//                     accept=".pdf" 
-//                     onChange={handleChange} 
-//                   />
-//                   {renderFileInfo(formData[key])}
-//                 </>
-//               )}
-//             </div>
-//           ))}
-
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </AppLayout>
-//   );
-// };
-
-// export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css';
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const FILE_LABELS = {
-//   photo: "Passport Size Photo (Image/PDF)",
-//   proposal: "Research Proposal (PDF)",
-//   formVicePresident: "Form Vice President (PDF)",
-//   formClearance: "Ethical Clearance Form (PDF)"
-// };
-
-// const SubmitApplication = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     formVicePresident: null,
-//     formClearance: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   const handleChange = (e) => {
-//     const { name, files, value } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const requiredFiles = ['photo', 'proposal', 'formVicePresident', 'formClearance'];
-//     for (const file of requiredFiles) {
-//       if (!formData[file]) {
-//         setStatusMessage(`Please upload your ${FILE_LABELS[file]}`);
-//         return;
-//       }
-//     }
-
-//     const data = new FormData();
-//     for (const key in formData) {
-//       if (formData[key]) data.append(key, formData[key]);
-//     }
-
-//     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
-//       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-//       console.log(result);
-
-//       // Reset form
-//       setFormData({
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: '',
-//         photo: null,
-//         proposal: null,
-//         formVicePresident: null,
-//         formClearance: null
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
-//     }
-//   };
-
-//   const renderFileInfo = (file, type) => {
-//     if (!file) return <span className="file-info">No file selected</span>;
-
-//     if (type === "photo") {
-//       // Ikiwa ni image
-//       if (file.type.startsWith("image/")) {
-//         return (
-//           <div className="passport-preview">
-//             <img src={URL.createObjectURL(file)} alt="Passport Preview" />
-//           </div>
-//         );
-//       }
-//       // Ikiwa ni PDF
-//       if (file.type === "application/pdf") {
-//         return (
-//           <a
-//             href={URL.createObjectURL(file)}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="view-link"
-//           >
-//             View Passport PDF
-//           </a>
-//         );
-//       }
-//     } else {
-//       // Zingine zote ni PDF
-//       return (
-//         <div className="file-preview">
-//           <span className="file-info">{file.name} ({(file.size / 1024).toFixed(2)} KB)</span>
-//           <a
-//             href={URL.createObjectURL(file)}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="view-link"
-//           >
-//             View Document
-//           </a>
-//         </div>
-//       );
-//     }
-//   };
-
-//   return (
-//     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
-
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
-//           </div>
-//         )}
-
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input 
-//             type="text" 
-//             name="fullName" 
-//             placeholder="Full Name" 
-//             value={formData.fullName} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="typeOfResearch" 
-//             placeholder="Type of Research" 
-//             value={formData.typeOfResearch} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="title" 
-//             placeholder="Title" 
-//             value={formData.title} 
-//             onChange={handleChange} 
-//             required 
-//           />
-
-//           <select 
-//             name="role" 
-//             value={formData.role} 
-//             onChange={handleChange} 
-//             required
-//           >
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => (
-//               <option key={role} value={role}>{role}</option>
-//             ))}
-//           </select>
-
-//           {/* File Uploads */}
-//           {Object.keys(FILE_LABELS).map(key => (
-//             <div className="file-upload" key={key}>
-//               <h4 className="file-title">{FILE_LABELS[key]}</h4>
-//               <input 
-//                 type="file" 
-//                 name={key} 
-//                 accept={key === "photo" ? "image/*,application/pdf" : ".pdf"} 
-//                 onChange={handleChange} 
-//               />
-//               {renderFileInfo(formData[key], key)}
-//             </div>
-//           ))}
-
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </AppLayout>
-//   );
-// };
-
-// export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css';
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const FILE_LABELS = {
-//   photo: "Passport Size Photo (Image/PDF)",
-//   proposal: "Research Proposal (PDF)",
-//   vice_president_form: "Form Vice President (PDF)",
-//   ethical_form: "Ethical Clearance Form (PDF)"
-// };
-
-// const SubmitApplication = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     vice_president_form: null,
-//     ethical_form: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   const handleChange = (e) => {
-//     const { name, files, value } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const requiredFiles = ['photo', 'proposal', 'vice_president_form', 'ethical_form'];
-//     for (const file of requiredFiles) {
-//       if (!formData[file]) {
-//         setStatusMessage(`Please upload your ${FILE_LABELS[file]}`);
-//         return;
-//       }
-//     }
-
-//     const data = new FormData();
-//     // Add other fields if needed by backend (e.g. application id)
-//     for (const key in formData) {
-//       if (formData[key]) data.append(key, formData[key]);
-//     }
-
-//     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
-//       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-//       console.log(result);
-
-//       // Reset form
-//       setFormData({
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: '',
-//         photo: null,
-//         proposal: null,
-//         vice_president_form: null,
-//         ethical_form: null
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
-//     }
-//   };
-
-//   const renderFileInfo = (file, type) => {
-//     if (!file) return <span className="file-info">No file selected</span>;
-
-//     if (type === "photo") {
-//       if (file.type.startsWith("image/")) {
-//         return (
-//           <div className="passport-preview">
-//             <img src={URL.createObjectURL(file)} alt="Passport Preview" />
-//           </div>
-//         );
-//       }
-//       if (file.type === "application/pdf") {
-//         return (
-//           <a
-//             href={URL.createObjectURL(file)}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="view-link"
-//           >
-//             View Passport PDF
-//           </a>
-//         );
-//       }
-//     } else {
-//       return (
-//         <div className="file-preview">
-//           <span className="file-info">{file.name} ({(file.size / 1024).toFixed(2)} KB)</span>
-//           <a
-//             href={URL.createObjectURL(file)}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="view-link"
-//           >
-//             View Document
-//           </a>
-//         </div>
-//       );
-//     }
-//   };
-
-//   return (
-//     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
-
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
-//           </div>
-//         )}
-
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input 
-//             type="text" 
-//             name="fullName" 
-//             placeholder="Full Name" 
-//             value={formData.fullName} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="typeOfResearch" 
-//             placeholder="Type of Research" 
-//             value={formData.typeOfResearch} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="title" 
-//             placeholder="Title" 
-//             value={formData.title} 
-//             onChange={handleChange} 
-//             required 
-//           />
-
-//           <select 
-//             name="role" 
-//             value={formData.role} 
-//             onChange={handleChange} 
-//             required
-//           >
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => (
-//               <option key={role} value={role}>{role}</option>
-//             ))}
-//           </select>
-
-//           {/* File Uploads */}
-//           {Object.keys(FILE_LABELS).map(key => (
-//             <div className="file-upload" key={key}>
-//               <h4 className="file-title">{FILE_LABELS[key]}</h4>
-//               <input 
-//                 type="file" 
-//                 name={key} 
-//                 accept={key === "photo" ? "image/*,application/pdf" : ".pdf"} 
-//                 onChange={handleChange} 
-//               />
-//               {renderFileInfo(formData[key], key)}
-//             </div>
-//           ))}
-
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </AppLayout>
-//   );
-// };
-
-// export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css';
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const FILE_LABELS = {
-//   photo: "Passport Size Photo (Image/PDF)",
-//   proposal: "Research Proposal (PDF)",
-//   vice_president_form: "Form Vice President (PDF)",
-//   ethical_form: "Ethical Clearance Form (PDF)"
-// };
-
-// const SubmitApplication = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     vice_president_form: null,
-//     ethical_form: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   const handleChange = (e) => {
-//     const { name, files, value } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const requiredFiles = ['photo', 'proposal', 'vice_president_form', 'ethical_form'];
-//     for (const file of requiredFiles) {
-//       if (!formData[file]) {
-//         setStatusMessage(`Please upload your ${FILE_LABELS[file]}`);
-//         setTimeout(() => setStatusMessage(''), 3000); // clear message after 3s
-//         return;
-//       }
-//     }
-
-//     const data = new FormData();
-//     for (const key in formData) {
-//       if (formData[key]) data.append(key, formData[key]);
-//     }
-
-//     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
-//       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-
-//       // auto-clear success message after 3s
-//       setTimeout(() => setStatusMessage(''), 3000);
-
-//       console.log(result);
-
-//       // Reset ONLY text fields, keep uploaded files
-//       setFormData(prev => ({
-//         ...prev,
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: ''
-//       }));
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
-//       setTimeout(() => setStatusMessage(''), 3000); // auto-clear error
-//     }
-//   };
-
-//   const renderFileInfo = (file, type) => {
-//     if (!file) return <span className="file-info">No file selected</span>;
-
-//     if (type === "photo") {
-//       if (file.type.startsWith("image/")) {
-//         return (
-//           <div className="passport-preview">
-//             <img src={URL.createObjectURL(file)} alt="Passport Preview" />
-//           </div>
-//         );
-//       }
-//       if (file.type === "application/pdf") {
-//         return (
-//           <a
-//             href={URL.createObjectURL(file)}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="view-link"
-//           >
-//             View Passport PDF
-//           </a>
-//         );
-//       }
-//     } else {
-//       return (
-//         <div className="file-preview">
-//           <span className="file-info">
-//             {file.name} ({(file.size / 1024).toFixed(2)} KB)
-//           </span>
-//           <a
-//             href={URL.createObjectURL(file)}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="view-link"
-//           >
-//             View Document
-//           </a>
-//         </div>
-//       );
-//     }
-//   };
-
-//   return (
-//     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
-
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
-//           </div>
-//         )}
-
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input 
-//             type="text" 
-//             name="fullName" 
-//             placeholder="Full Name" 
-//             value={formData.fullName} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="typeOfResearch" 
-//             placeholder="Type of Research" 
-//             value={formData.typeOfResearch} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="title" 
-//             placeholder="Title" 
-//             value={formData.title} 
-//             onChange={handleChange} 
-//             required 
-//           />
-
-//           <select 
-//             name="role" 
-//             value={formData.role} 
-//             onChange={handleChange} 
-//             required
-//           >
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => (
-//               <option key={role} value={role}>{role}</option>
-//             ))}
-//           </select>
-
-//           {/* File Uploads */}
-//           {Object.keys(FILE_LABELS).map(key => (
-//             <div className="file-upload" key={key}>
-//               <h4 className="file-title">{FILE_LABELS[key]}</h4>
-//               <input 
-//                 type="file" 
-//                 name={key} 
-//                 accept={key === "photo" ? "image/*,application/pdf" : ".pdf"} 
-//                 onChange={handleChange} 
-//               />
-//               {renderFileInfo(formData[key], key)}
-//             </div>
-//           ))}
-
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </AppLayout>
-//   );
-// };
-
-// export default SubmitApplication;
-
-
-
-
-// now
-
-// import React, { useState } from 'react'         ;
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css';
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const FILE_LABELS = {
-//   photo: "Passport Size Photo (Image/PDF)",
-//   proposal: "Research Proposal (PDF)",
-//   vice_president_form: "Form Vice President (PDF)",
-//   ethical_form: "Ethical Clearance Form (PDF)"
-// };
-
-// const SubmitApplication = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     vice_president_form: null,
-//     ethical_form: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   const handleChange = (e) => {
-//     const { name, files, value } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const requiredFiles = ['photo', 'proposal', 'vice_president_form', 'ethical_form'];
-//     for (const file of requiredFiles) {
-//       if (!formData[file]) {
-//         setStatusMessage(`Please upload your ${FILE_LABELS[file]}`);
-//         setTimeout(() => setStatusMessage(''), 3000); // clear message after 3s
-//         return;
-//       }
-//     }
-
-//     const data = new FormData();
-//     for (const key in formData) {
-//       if (formData[key]) data.append(key, formData[key]);
-//     }
-
-//     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
-//       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-
-//       // auto-clear success message after 3s
-//       setTimeout(() => setStatusMessage(''), 3000);
-
-//       console.log(result);
-
-//       // Reset ONLY text fields, keep uploaded files
-//       setFormData(prev => ({
-//         ...prev,
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: ''
-//       }));
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
-//       setTimeout(() => setStatusMessage(''), 3000); // auto-clear error
-//     }
-//   };
-
-//   const renderFileInfo = (file, type) => {
-//     if (!file) return <span className="file-info">No file selected</span>;
-
-//     if (type === "photo") {
-//       if (file.type.startsWith("image/")) {
-//         return (
-//           <div className="passport-preview">
-//             <img src={URL.createObjectURL(file)} alt="Passport Preview" />
-//           </div>
-//         );
-//       }
-//       if (file.type === "application/pdf") {
-//         return (
-//           <a
-//             href={URL.createObjectURL(file)}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="view-link"
-//           >
-//             View Passport PDF
-//           </a>
-//         );
-//       }
-//     } else {
-//       return (
-//         <div className="file-preview">
-//           <span className="file-info">
-//             {file.name} ({(file.size / 1024).toFixed(2)} KB)
-//           </span>
-//           <a
-//             href={URL.createObjectURL(file)}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="view-link"
-//           >
-//             View Document
-//           </a>
-//         </div>
-//       );
-//     }
-//   };
-
-//   return (
-//     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
-
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
-//           </div>
-//         )}
-
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input 
-//             type="text" 
-//             name="fullName" 
-//             placeholder="Full Name" 
-//             value={formData.fullName} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="typeOfResearch" 
-//             placeholder="Type of Research" 
-//             value={formData.typeOfResearch} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="title" 
-//             placeholder="Title" 
-//             value={formData.title} 
-//             onChange={handleChange} 
-//             required 
-//           />
-
-//           <select 
-//             name="role" 
-//             value={formData.role} 
-//             onChange={handleChange} 
-//             required
-//           >
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => (
-//               <option key={role} value={role}>{role}</option>
-//             ))}
-//           </select>
-
-//           {/* File Uploads */}
-//           {Object.keys(FILE_LABELS).map(key => (
-//             <div className="file-upload" key={key}>
-//               <h4 className="file-title">{FILE_LABELS[key]}</h4>
-//               <input 
-//                 type="file" 
-//                 name={key} 
-//                 accept={key === "photo" ? "image/*,application/pdf" : ".pdf"} 
-//                 onChange={handleChange} 
-//               />
-//               {renderFileInfo(formData[key], key)}
-//             </div>
-//           ))}
-
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </AppLayout>
-//   );
-// };
-
-// export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css';
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const FILE_LABELS = {
-//   photo: "Passport Size Photo (Image/PDF)",
-//   proposal: "Research Proposal (PDF)",
-//   vice_president_form: "Form Vice President (PDF)",
-//   ethical_form: "Ethical Clearance Form (PDF)"
-// };
-
-// const SubmitApplication = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     vice_president_form: null,
-//     ethical_form: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   // 🚀 Fetch uploaded files from backend on page load
+//   // Fetch application + attachments
 //   useEffect(() => {
-//     const fetchFiles = async () => {
+//     const fetchApplication = async () => {
+//       let token = localStorage.getItem("access");
 //       try {
-//         const res = await fetch("http://localhost:8000/api/attachments/upload/");
-//         if (!res.ok) throw new Error("Failed to fetch attachments");
-//         const data = await res.json();
+//         const res = await fetch(`${API_BASE_URL}/applications/${applicationId}/`, {
+//           headers: { Authorization: `Bearer ${token}` },
+//         });
 
-//         setFormData(prev => ({
-//           ...prev,
-//           photo: data.photo || null,
-//           proposal: data.proposal || null,
-//           vice_president_form: data.vice_president_form || null,
-//           ethical_form: data.ethical_form || null,
-//         }));
+//         if (res.status === 401) {
+//           token = await refreshToken();
+//           if (!token) return;
+//           const retryRes = await fetch(`${API_BASE_URL}/applications/${applicationId}/`, {
+//             headers: { Authorization: `Bearer ${token}` },
+//           });
+//           if (!retryRes.ok) throw new Error("Failed to fetch application after refresh");
+//           const data = await retryRes.json();
+//           setApplication(data);
+//           setAttachments(data.attachments || []);
+//           return;
+//         }
+
+//         if (!res.ok) throw new Error("Failed to fetch application");
+//         const data = await res.json();
+//         setApplication(data);
+//         setAttachments(data.attachments || []);
 //       } catch (err) {
-//         console.error(err);
+//         console.error("Error fetching application", err);
+//         setError("Failed to load application details");
 //       }
 //     };
-//     fetchFiles();
-//   }, []);
 
-//   const handleChange = (e) => {
-//     const { name, files, value } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
+//     fetchApplication();
+//   }, [applicationId]);
 
-//   const handleSubmit = async (e) => {
+//   // Handle file upload
+//   const handleUpload = async (e) => {
 //     e.preventDefault();
+//     setMessage("");
+//     setError("");
 
-//     const requiredFiles = ['photo', 'proposal', 'vice_president_form', 'ethical_form'];
-//     for (const file of requiredFiles) {
-//       if (!formData[file]) {
-//         setStatusMessage(`Please upload your ${FILE_LABELS[file]}`);
-//         setTimeout(() => setStatusMessage(''), 3000);
-//         return;
-//       }
+//     if (!file) {
+//       setError("Please choose a file.");
+//       return;
 //     }
 
-//     const data = new FormData();
-//     for (const key in formData) {
-//       if (formData[key] instanceof File) {
-//         data.append(key, formData[key]);
-//       }
-//     }
-
-//     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
-//       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-//       setTimeout(() => setStatusMessage(''), 3000);
-
-//       console.log(result);
-
-//       // Reset ONLY text fields
-//       setFormData(prev => ({
-//         ...prev,
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: ''
-//       }));
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
-//       setTimeout(() => setStatusMessage(''), 3000);
-//     }
-//   };
-
-//   const renderFileInfo = (file, type) => {
-//     if (!file) return <span className="file-info">No file uploaded</span>;
-
-//     // If new file selected (File object)
-//     if (file instanceof File) {
-//       if (type === 'photo' && file.type.startsWith('image/')) {
-//         return <img src={URL.createObjectURL(file)} alt="Passport Preview" className="passport-preview" />;
-//       } else {
-//         return (
-//           <div className="file-preview">
-//             <span className="file-info">{file.name} ({(file.size / 1024).toFixed(2)} KB)</span>
-//             <a href={URL.createObjectURL(file)} target="_blank" rel="noopener noreferrer" className="view-link">View Document</a>
-//           </div>
-//         );
-//       }
-//     }
-
-//     // If file is string (URL from backend)
-//     if (typeof file === 'string') {
-//       const isPDF = file.endsWith('.pdf');
-//       if (type === 'photo' && !isPDF) {
-//         return <img src={file} alt="Passport Preview" className="passport-preview" />;
-//       }
-//       return (
-//         <a href={file} target="_blank" rel="noopener noreferrer" className="view-link">
-//           View Uploaded {FILE_LABELS[type]}
-//         </a>
-//       );
-//     }
-
-//     return null;
-//   };
-
-//   return (
-//     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
-
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
-//           </div>
-//         )}
-
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input 
-//             type="text" 
-//             name="fullName" 
-//             placeholder="Full Name" 
-//             value={formData.fullName} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="typeOfResearch" 
-//             placeholder="Type of Research" 
-//             value={formData.typeOfResearch} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="title" 
-//             placeholder="Title" 
-//             value={formData.title} 
-//             onChange={handleChange} 
-//             required 
-//           />
-
-//           <select 
-//             name="role" 
-//             value={formData.role} 
-//             onChange={handleChange} 
-//             required
-//           >
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => (
-//               <option key={role} value={role}>{role}</option>
-//             ))}
-//           </select>
-
-//           {/* File Uploads */}
-//           {Object.keys(FILE_LABELS).map(key => (
-//             <div className="file-upload" key={key}>
-//               <h4 className="file-title">{FILE_LABELS[key]}</h4>
-//               <input 
-//                 type="file" 
-//                 name={key} 
-//                 accept={key === "photo" ? "image/*,application/pdf" : ".pdf"} 
-//                 onChange={handleChange} 
-//               />
-//               {renderFileInfo(formData[key], key)}
-//             </div>
-//           ))}
-
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </AppLayout>
-//   );
-// };
-
-// export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css';
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const FILE_LABELS = {
-//   photo: "Passport Size Photo (Image/PDF)",
-//   proposal: "Research Proposal (PDF)",
-//   vice_president_form: "Form Vice President (PDF)",
-//   ethical_form: "Ethical Clearance Form (PDF)"
-// };
-
-// const SubmitApplication = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     vice_president_form: null,
-//     ethical_form: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   // Fetch uploaded files from backend on page load
-//   useEffect(() => {
-//     const fetchFiles = async () => {
+//     let token = localStorage.getItem("access");
+
+//     const uploadFile = async () => {
+//       const formData = new FormData();
+//       formData.append("application_id", applicationId); // matches backend
+//       formData.append("file_type", fileType);
+//       formData.append("file", file); // matches serializer
+
+//       setLoading(true);
 //       try {
-//         const res = await fetch("http://localhost:8000/api/attachments/upload/");
-//         if (!res.ok) throw new Error("Failed to fetch attachments");
-//         const data = await res.json();
+//         const res = await fetch(`${API_BASE_URL}/attachments/upload/`, {
+//           method: "POST",
+//           headers: { Authorization: `Bearer ${token}` },
+//           body: formData,
+//         });
 
-//         setFormData(prev => ({
-//           ...prev,
-//           photo: data.photo || null,
-//           proposal: data.proposal || null,
-//           vice_president_form: data.vice_president_form || null,
-//           ethical_form: data.ethical_form || null,
-//         }));
+//         if (res.status === 401) {
+//           token = await refreshToken();
+//           if (!token) return;
+//           const retryRes = await fetch(`${API_BASE_URL}/attachments/upload/`, {
+//             method: "POST",
+//             headers: { Authorization: `Bearer ${token}` },
+//             body: formData,
+//           });
+//           if (!retryRes.ok) throw new Error("Upload failed after token refresh");
+//           const data = await retryRes.json();
+//           if (data && data.id) setAttachments((prev) => [...prev, data]);
+//           setMessage("File uploaded successfully!");
+//           setFile(null);
+//           document.getElementById("file-input").value = "";
+//           return;
+//         }
+
+//         if (!res.ok) throw new Error("Upload failed");
+//         const data = await res.json();
+//         if (data && data.id) {
+//           setAttachments((prev) => [...prev, data]);
+//           setMessage("File uploaded successfully!");
+//           setFile(null);
+//           document.getElementById("file-input").value = "";
+//         } else {
+//           setError("Upload succeeded but server did not return attachment ID.");
+//         }
 //       } catch (err) {
-//         console.error(err);
+//         console.error("Upload error", err);
+//         setError("File upload failed.");
+//       } finally {
+//         setLoading(false);
 //       }
 //     };
-//     fetchFiles();
-//   }, []);
 
-//   const handleChange = (e) => {
-//     const { name, files, value } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const requiredFiles = ['photo', 'proposal', 'vice_president_form', 'ethical_form'];
-//     for (const file of requiredFiles) {
-//       if (!formData[file]) {
-//         setStatusMessage(`Please upload your ${FILE_LABELS[file]}`);
-//         setTimeout(() => setStatusMessage(''), 3000);
-//         return;
-//       }
-//     }
-
-//     const data = new FormData();
-//     for (const key in formData) {
-//       if (formData[key] instanceof File) {
-//         data.append(key, formData[key]);
-//       }
-//     }
-
-//     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
-//       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-//       setTimeout(() => setStatusMessage(''), 3000);
-
-//       console.log(result);
-
-//       // Reset ONLY text fields
-//       setFormData(prev => ({
-//         ...prev,
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: ''
-//       }));
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
-//       setTimeout(() => setStatusMessage(''), 3000);
-//     }
-//   };
-
-//   const renderFileInfo = (file, type) => {
-//     if (!file) return <span className="file-info">No file uploaded</span>;
-
-//     // If new file selected (File object)
-//     if (file instanceof File) {
-//       if (type === 'photo' && file.type.startsWith('image/')) {
-//         return <img src={URL.createObjectURL(file)} alt="Passport Preview" className="passport-preview" />;
-//       } else {
-//         return (
-//           <div className="file-preview">
-//             <span className="file-info">{file.name} ({(file.size / 1024).toFixed(2)} KB)</span>
-//             <a href={URL.createObjectURL(file)} target="_blank" rel="noopener noreferrer" className="view-link">View Document</a>
-//           </div>
-//         );
-//       }
-//     }
-
-//     // If file is string (URL from backend)
-//     if (typeof file === 'string') {
-//       const isPDF = file.endsWith('.pdf');
-//       if (type === 'photo' && !isPDF) {
-//         return <img src={file} alt="Passport Preview" className="passport-preview" />;
-//       }
-//       return (
-//         <a href={file} target="_blank" rel="noopener noreferrer" className="view-link">
-//           View Uploaded {FILE_LABELS[type]}
-//         </a>
-//       );
-//     }
-
-//     return null;
+//     uploadFile();
 //   };
 
 //   return (
 //     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
+//       <div className="app-attachments-container">
+//         <h2>Application & Attachments</h2>
 
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
+//         {error && (
+//           <div className="error-message">
+//             <FaExclamationTriangle className="icon" /> {error}
 //           </div>
 //         )}
 
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input 
-//             type="text" 
-//             name="fullName" 
-//             placeholder="Full Name" 
-//             value={formData.fullName} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="typeOfResearch" 
-//             placeholder="Type of Research" 
-//             value={formData.typeOfResearch} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="title" 
-//             placeholder="Title" 
-//             value={formData.title} 
-//             onChange={handleChange} 
-//             required 
-//           />
+//         {application ? (
+//           <div className="application-info">
+//             <h3>{application.title}</h3>
+//             <p><b>Category:</b> {application.category}</p>
+//             <p><b>Status:</b> {application.status}</p>
+//             <p><b>Researcher:</b> {application.researcher}</p>
+//           </div>
+//         ) : (
+//           <p>Loading application...</p>
+//         )}
 
-//           <select 
-//             name="role" 
-//             value={formData.role} 
-//             onChange={handleChange} 
-//             required
-//           >
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => (
-//               <option key={role} value={role}>{role}</option>
-//             ))}
-//           </select>
-
-//           {/* File Uploads */}
-//           {Object.keys(FILE_LABELS).map(key => (
-//             <div className="file-upload" key={key}>
-//               <h4 className="file-title">{FILE_LABELS[key]}</h4>
-//               <input 
-//                 type="file" 
-//                 name={key} 
-//                 accept={key === "photo" ? "image/*,application/pdf" : ".pdf"} 
-//                 onChange={handleChange} 
-//               />
-//               {renderFileInfo(formData[key], key)}
+//         <div className="upload-section">
+//           <h3>Upload Attachment</h3>
+//           <form onSubmit={handleUpload}>
+//             <div className="form-group">
+//               <label htmlFor="file-type">File Type:</label>
+//               <select
+//                 id="file-type"
+//                 value={fileType}
+//                 onChange={(e) => setFileType(e.target.value)}
+//               >
+//                 <option value="Proposal">Proposal</option>
+//                 <option value="Makamu Form">Makamu Form</option>
+//                 <option value="Ethical Form">Ethical Form</option>
+//               </select>
 //             </div>
-//           ))}
 
-//           <button type="submit">Submit</button>
-//         </form>
+//             <div className="form-group">
+//               <input
+//                 id="file-input"
+//                 type="file"
+//                 onChange={(e) => setFile(e.target.files[0])}
+//               />
+//             </div>
+
+//             <button type="submit" disabled={loading}>
+//               {loading ? "Uploading..." : "Upload"}
+//             </button>
+//           </form>
+
+//           {message && (
+//             <div className="success-message">
+//               <FaCheckCircle className="icon" /> {message}
+//             </div>
+//           )}
+//         </div>
+
+//         <div className="attachments-list">
+//           <h3>Existing Attachments</h3>
+//           {attachments.length > 0 ? (
+//             <ul>
+//               {attachments.map((att) => (
+//                 <li key={att.id}>
+//                   <b>{att.file_type}</b> -{" "}
+//                   <a href={`${API_BASE_URL}${att.file_path}`} target="_blank" rel="noreferrer">
+//                     View File
+//                   </a>
+//                 </li>
+//               ))}
+//             </ul>
+//           ) : (
+//             <p>No attachments uploaded yet.</p>
+//           )}
+//         </div>
 //       </div>
 //     </AppLayout>
 //   );
 // };
 
 // export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';   now
-// import AppLayout from '../../components/layouts/AppLayout';
-// import './SubmitApplication.css';
-
-// const ROLE_OPTIONS = [
-//   'Student',
-//   'University',
-//   'Institute',
-//   'Independent'
-// ];
-
-// const FILE_LABELS = {
-//   photo: "Passport Size Photo (Image/PDF)",
-//   proposal: "Research Proposal (PDF)",
-//   vice_president_form: "Form Vice President (PDF)",
-//   ethical_form: "Ethical Clearance Form (PDF)"
-// };
-
-// const SubmitApplication = () => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     typeOfResearch: '',
-//     title: '',
-//     role: '',
-//     photo: null,
-//     proposal: null,
-//     vice_president_form: null,
-//     ethical_form: null
-//   });
-
-//   const [statusMessage, setStatusMessage] = useState('');
-
-//   // Fetch uploaded files from backend on page load
-//   useEffect(() => {
-//     const fetchFiles = async () => {
-//       try {
-//         const res = await fetch("http://localhost:8000/api/attachments/upload/");
-//         if (!res.ok) throw new Error("Failed to fetch attachments");
-//         const data = await res.json();
-
-//         setFormData(prev => ({
-//           ...prev,
-//           photo: data.photo || null,
-//           proposal: data.proposal || null,
-//           vice_president_form: data.vice_president_form || null,
-//           ethical_form: data.ethical_form || null,
-//         }));
-//       } catch (err) {
-//         console.error(err);
-//       }
-//     };
-//     fetchFiles();
-//   }, []);
-
-//   const handleChange = (e) => {
-//     const { name, files, value } = e.target;
-//     if (files) {
-//       setFormData(prev => ({ ...prev, [name]: files[0] }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const requiredFiles = ['photo', 'proposal', 'vice_president_form', 'ethical_form'];
-//     for (const file of requiredFiles) {
-//       if (!formData[file]) {
-//         setStatusMessage(`Please upload your ${FILE_LABELS[file]}`);
-//         setTimeout(() => setStatusMessage(''), 3000);
-//         return;
-//       }
-//     }
-
-//     const data = new FormData();
-//     for (const key in formData) {
-//       if (formData[key] instanceof File) {
-//         data.append(key, formData[key]);
-//       }
-//     }
-
-//     try {
-//       const response = await fetch('http://localhost:8000/api/attachments/upload/', {
-//         method: 'POST',
-//         body: data
-//       });
-
-//       if (!response.ok) throw new Error('Submission failed');
-
-//       const result = await response.json();
-//       setStatusMessage('Form submitted successfully!');
-//       setTimeout(() => setStatusMessage(''), 3000);
-
-//       console.log(result);
-
-//       // Reset ONLY text fields
-//       setFormData(prev => ({
-//         ...prev,
-//         fullName: '',
-//         typeOfResearch: '',
-//         title: '',
-//         role: ''
-//       }));
-//     } catch (error) {
-//       console.error(error);
-//       setStatusMessage('Submission failed!');
-//       setTimeout(() => setStatusMessage(''), 3000);
-//     }
-//   };
-
-//   const renderFileInfo = (file, type) => {
-//     if (!file) return <span className="file-info">No file uploaded</span>;
-
-//     // If new file selected (File object)
-//     if (file instanceof File) {
-//       if (type === 'photo' && file.type.startsWith('image/')) {
-//         return <img src={URL.createObjectURL(file)} alt="Passport Preview" className="passport-preview" />;
-//       } else {
-//         return (
-//           <div className="file-preview">
-//             <span className="file-info">{file.name} ({(file.size / 1024).toFixed(2)} KB)</span>
-//             <a href={URL.createObjectURL(file)} target="_blank" rel="noopener noreferrer" className="view-link">View Document</a>
-//           </div>
-//         );
-//       }
-//     }
-
-//     // If file is string (URL from backend)
-//     if (typeof file === 'string') {
-//       const isPDF = file.endsWith('.pdf');
-//       if (type === 'photo' && !isPDF) {
-//         return <img src={file} alt="Passport Preview" className="passport-preview" />;
-//       }
-//       return (
-//         <a href={file} target="_blank" rel="noopener noreferrer" className="view-link">
-//           View Uploaded {FILE_LABELS[type]}
-//         </a>
-//       );
-//     }
-
-//     return null;
-//   };
-
-//   return (
-//     <AppLayout>
-//       <div className="dashboard-container">
-//         <h2 className="dashboard-title">Research Submission Dashboard</h2>
-
-//         {statusMessage && (
-//           <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-//             {statusMessage}
-//           </div>
-//         )}
-
-//         <form onSubmit={handleSubmit} className="dashboard-form">
-//           <input 
-//             type="text" 
-//             name="fullName" 
-//             placeholder="Full Name" 
-//             value={formData.fullName} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="typeOfResearch" 
-//             placeholder="Type of Research" 
-//             value={formData.typeOfResearch} 
-//             onChange={handleChange} 
-//             required 
-//           />
-//           <input 
-//             type="text" 
-//             name="title" 
-//             placeholder="Title" 
-//             value={formData.title} 
-//             onChange={handleChange} 
-//             required 
-//           />
-
-//           <select 
-//             name="role" 
-//             value={formData.role} 
-//             onChange={handleChange} 
-//             required
-//           >
-//             <option value="">Select Role</option>
-//             {ROLE_OPTIONS.map(role => (
-//               <option key={role} value={role}>{role}</option>
-//             ))}
-//           </select>
-
-//           {/* File Uploads */}
-//           {Object.keys(FILE_LABELS).map(key => (
-//             <div className="file-upload" key={key}>
-//               <h4 className="file-title">{FILE_LABELS[key]}</h4>
-//               <input 
-//                 type="file" 
-//                 name={key} 
-//                 accept={key === "photo" ? "image/*,application/pdf" : ".pdf"} 
-//                 onChange={handleChange} 
-//               />
-//               {renderFileInfo(formData[key], key)}
-//             </div>
-//           ))}
-
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </AppLayout>
-//   );
-// };
-
-// export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2143,266 +249,306 @@
 
 
 import React, { useState, useEffect } from 'react';
-import AppLayout from '../../components/layouts/AppLayout';
+import AppLayout from "../../components/layouts/AppLayout"; 
 import './SubmitApplication.css';
 
-const ROLE_OPTIONS = [
-  'Student',
-  'University',
-  'Institute',
-  'Independent'
-];
-
-const FILE_LABELS = {
-  photo: "Passport Size Photo (Image/PDF)",
-  proposal: "Research Proposal (PDF)",
-  vice_president_form: "Form Vice President (PDF)",
-  ethical_form: "Ethical Clearance Form (PDF)"
-};
-
-// Helper to get JWT token (adjust as needed)
-const getToken = () => localStorage.getItem('accessToken');
+const API_BASE_URL = 'http://localhost:8000/api';
+const TOKEN = 'your-token-here'; // Replace with actual token or fetch from auth
 
 const SubmitApplication = () => {
+  const [applications, setApplications] = useState([]);
+  const [userRole, setUserRole] = useState('Researcher'); // Replace with role fetch
   const [formData, setFormData] = useState({
-    fullName: '',
-    typeOfResearch: '',
     title: '',
-    role: '',
-    photo: null,
-    proposal: null,
-    vice_president_form: null,
-    ethical_form: null
+    category: '',
+    start_date: '',
+    end_date: '',
   });
+  const [attachmentForm, setAttachmentForm] = useState({
+    applicationId: '',
+    file_type: 'Proposal',
+    file: null,
+  });
+  const [feedback, setFeedback] = useState('');
+  const [message, setMessage] = useState('');
 
-  const [statusMessage, setStatusMessage] = useState('');
-
-  // Fetch uploaded files from backend on page load
+  // Fetch applications on mount
   useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        const res = await fetch("http://localhost:8000/api/attachments/upload/", {
-          headers: {
-            'Authorization': 'Bearer ' + getToken()
-          }
-        });
-        if (!res.ok) throw new Error("Failed to fetch attachments");
-        const data = await res.json();
-
-        setFormData(prev => ({
-          ...prev,
-          photo: data.photo || null,
-          proposal: data.proposal || null,
-          vice_president_form: data.vice_president_form || null,
-          ethical_form: data.ethical_form || null,
-        }));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchFiles();
+    fetchApplications();
+    // TODO: Fetch user role (e.g., via /api/user/role/)
   }, []);
 
-  const handleChange = (e) => {
-    const { name, files, value } = e.target;
-    if (files) {
-      setFormData(prev => ({ ...prev, [name]: files[0] }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+  const fetchApplications = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/applications/`, {
+        headers: { Authorization: `Token ${TOKEN}` },
+      });
+      if (!response.ok) throw new Error('Failed to fetch applications');
+      const data = await response.json();
+      setApplications(data);
+    } catch (error) {
+      setMessage(`Error fetching applications: ${error.message}`);
     }
   };
 
-  const handleSubmit = async (e) => {
+  // Handle application creation
+  const handleCreateApplication = async (e) => {
     e.preventDefault();
-
-    const requiredFiles = ['photo', 'proposal', 'vice_president_form', 'ethical_form'];
-    for (const file of requiredFiles) {
-      if (!formData[file]) {
-        setStatusMessage(`Please upload your ${FILE_LABELS[file]}`);
-        setTimeout(() => setStatusMessage(''), 3000);
-        return;
+    try {
+      const response = await fetch(`${API_BASE_URL}/applications/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to create application');
       }
+      setMessage('Application created successfully!');
+      setFormData({ title: '', category: '', start_date: '', end_date: '' });
+      fetchApplications();
+    } catch (error) {
+      setMessage(`Error creating application: ${error.message}`);
     }
+  };
 
-    const data = new FormData();
-    for (const key in formData) {
-      if (formData[key] instanceof File) {
-        data.append(key, formData[key]);
-      }
-    }
+  // Handle attachment upload
+  const handleUploadAttachment = async (e) => {
+    e.preventDefault();
+    const formDataToSend = new FormData();
+    formDataToSend.append('application', attachmentForm.applicationId);
+    formDataToSend.append('file_type', attachmentForm.file_type);
+    formDataToSend.append('file_path', attachmentForm.file);
 
     try {
-      const response = await fetch('http://localhost:8000/api/attachments/upload/', {
+      const response = await fetch(`${API_BASE_URL}/attachments/`, {
         method: 'POST',
-        body: data,
-        headers: {
-          'Authorization': 'Bearer ' + getToken()
-        }
+        headers: { Authorization: `Token ${TOKEN}` },
+        body: formDataToSend,
       });
-
-      if (!response.ok) throw new Error('Submission failed');
-
-      const result = await response.json();
-      setStatusMessage('Form submitted successfully!');
-      setTimeout(() => setStatusMessage(''), 3000);
-
-      console.log(result);
-
-      // Reset ONLY text fields
-      setFormData(prev => ({
-        ...prev,
-        fullName: '',
-        typeOfResearch: '',
-        title: '',
-        role: ''
-      }));
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to upload attachment');
+      }
+      setMessage('Attachment uploaded successfully!');
+      setAttachmentForm({ applicationId: '', file_type: 'Proposal', file: null });
+      fetchApplications();
     } catch (error) {
-      console.error(error);
-      setStatusMessage('Submission failed!');
-      setTimeout(() => setStatusMessage(''), 3000);
+      setMessage(`Error uploading attachment: ${error.message}`);
     }
   };
 
-  const renderFileInfo = (file, type) => {
-    if (!file) return <span className="file-info">No file uploaded</span>;
-
-    // If new file selected (File object)
-    if (file instanceof File) {
-      if (type === 'photo' && file.type.startsWith('image/')) {
-        return <img src={URL.createObjectURL(file)} alt="Passport Preview" className="passport-preview" />;
-      } else {
-        return (
-          <div className="file-preview">
-            <span className="file-info">{file.name} ({(file.size / 1024).toFixed(2)} KB)</span>
-            <a href={URL.createObjectURL(file)} target="_blank" rel="noopener noreferrer" className="view-link">View Document</a>
-          </div>
-        );
+  // Handle application submission
+  const handleSubmitApplication = async (id) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/applications/${id}/submit/`, {
+        method: 'POST',
+        headers: { Authorization: `Token ${TOKEN}` },
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit application');
       }
+      setMessage('Application submitted successfully!');
+      fetchApplications();
+    } catch (error) {
+      setMessage(`Error submitting application: ${error.message}`);
     }
+  };
 
-    // If file is string (URL from backend)
-    if (typeof file === 'string') {
-      const isPDF = file.endsWith('.pdf');
-      if (type === 'photo' && !isPDF) {
-        return <img src={file} alt="Passport Preview" className="passport-preview" />;
+  // Handle application approval
+  const handleApproveApplication = async (id) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/applications/${id}/approve/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ feedback }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to approve application');
       }
-      return (
-        <a href={file} target="_blank" rel="noopener noreferrer" className="view-link">
-          View Uploaded {FILE_LABELS[type]}
-        </a>
-      );
+      setMessage('Application approved successfully!');
+      setFeedback('');
+      fetchApplications();
+    } catch (error) {
+      setMessage(`Error approving application: ${error.message}`);
     }
+  };
 
-    return null;
+  // Handle application rejection
+  const handleRejectApplication = async (id) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/applications/${id}/reject/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ feedback }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to reject application');
+      }
+      setMessage('Application rejected successfully!');
+      setFeedback('');
+      fetchApplications();
+    } catch (error) {
+      setMessage(`Error rejecting application: ${error.message}`);
+    }
+  };
+
+  // Handle attachment review
+  const handleReviewAttachment = async (attachmentId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/attachments/${attachmentId}/review/`, {
+        method: 'POST',
+        headers: { Authorization: `Token ${TOKEN}` },
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to review attachment');
+      }
+      setMessage('Attachment reviewed successfully!');
+      fetchApplications();
+    } catch (error) {
+      setMessage(`Error reviewing attachment: ${error.message}`);
+    }
   };
 
   return (
     <AppLayout>
-      <div className="dashboard-container">
-        <h2 className="dashboard-title">Research Submission Dashboard</h2>
+      <div className="submit-application-container">
+        <h1>Submit Application</h1>
+        {message && <p className={message.includes('Error') ? 'error' : 'success'}>{message}</p>}
 
-        {statusMessage && (
-          <div className={`status-message ${statusMessage.includes('successfully') ? 'success' : 'error'}`}>
-            {statusMessage}
-          </div>
-        )}
+        {/* Create Application Form */}
+        <div className="section">
+          <h2>Create Application</h2>
+          <form onSubmit={handleCreateApplication}>
+            <input
+              type="text"
+              placeholder="Title"
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Category"
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              required
+            />
+            <input
+              type="date"
+              value={formData.start_date}
+              onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+              required
+            />
+            <input
+              type="date"
+              value={formData.end_date}
+              onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+              required
+            />
+            <button type="submit">Create Application</button>
+          </form>
+        </div>
 
-        <form onSubmit={handleSubmit} className="dashboard-form">
-          <input 
-            type="text" 
-            name="fullName" 
-            placeholder="Full Name" 
-            value={formData.fullName} 
-            onChange={handleChange} 
-            required 
-          />
-          <input 
-            type="text" 
-            name="typeOfResearch" 
-            placeholder="Type of Research" 
-            value={formData.typeOfResearch} 
-            onChange={handleChange} 
-            required 
-          />
-          <input 
-            type="text" 
-            name="title" 
-            placeholder="Title" 
-            value={formData.title} 
-            onChange={handleChange} 
-            required 
-          />
+        {/* Upload Attachment Form */}
+        <div className="section">
+          <h2>Upload Attachment</h2>
+          <form onSubmit={handleUploadAttachment}>
+            <select
+              value={attachmentForm.applicationId}
+              onChange={(e) => setAttachmentForm({ ...attachmentForm, applicationId: e.target.value })}
+              required
+            >
+              <option value="">Select Application</option>
+              {applications.map((app) => (
+                <option key={app.id} value={app.id}>
+                  {app.title}
+                </option>
+              ))}
+            </select>
+            <select
+              value={attachmentForm.file_type}
+              onChange={(e) => setAttachmentForm({ ...attachmentForm, file_type: e.target.value })}
+            >
+              <option value="Proposal">Proposal</option>
+              <option value="Makamu Form">Makamu Form</option>
+              <option value="Ethical Form">Ethical Form</option>
+            </select>
+            <input
+              type="file"
+              accept=".pdf,.docx"
+              onChange={(e) => setAttachmentForm({ ...attachmentForm, file: e.target.files[0] })}
+              required
+            />
+            <button type="submit">Upload Attachment</button>
+          </form>
+        </div>
 
-          <select 
-            name="role" 
-            value={formData.role} 
-            onChange={handleChange} 
-            required
-          >
-            <option value="">Select Role</option>
-            {ROLE_OPTIONS.map(role => (
-              <option key={role} value={role}>{role}</option>
-            ))}
-          </select>
-
-          {/* File Uploads */}
-          {Object.keys(FILE_LABELS).map(key => (
-            <div className="file-upload" key={key}>
-              <h4 className="file-title">{FILE_LABELS[key]}</h4>
-              <input 
-                type="file" 
-                name={key} 
-                accept={key === "photo" ? "image/*,application/pdf" : ".pdf"} 
-                onChange={handleChange} 
-              />
-              {renderFileInfo(formData[key], key)}
+        {/* Application List */}
+        <div className="section">
+          <h2>Applications</h2>
+          {applications.map((app) => (
+            <div key={app.id} className="application">
+              <h3>{app.title}</h3>
+              <p>Category: {app.category}</p>
+              <p>Status: {app.status}</p>
+              <p>Start Date: {app.start_date}</p>
+              <p>End Date: {app.end_date}</p>
+              <p>Feedback: {app.officer_feedback || 'None'}</p>
+              <p>Can Submit: {app.can_submit ? 'Yes' : 'No'}</p>
+              {userRole === 'Officer' && <p>Can Approve: {app.can_officer_approve ? 'Yes' : 'No'}</p>}
+              <div className="actions">
+                {userRole === 'Researcher' && app.status === 'Draft' && app.can_submit && (
+                  <button onClick={() => handleSubmitApplication(app.id)}>Submit</button>
+                )}
+                {userRole === 'Officer' && app.status === 'Pending' && app.can_officer_approve && (
+                  <>
+                    <input
+                      type="text"
+                      placeholder="Feedback"
+                      value={feedback}
+                      onChange={(e) => setFeedback(e.target.value)}
+                    />
+                    <button onClick={() => handleApproveApplication(app.id)}>Approve</button>
+                    <button onClick={() => handleRejectApplication(app.id)}>Reject</button>
+                  </>
+                )}
+              </div>
+              <h4>Attachments</h4>
+              {app.attachments.length > 0 ? (
+                <ul>
+                  {app.attachments.map((attachment) => (
+                    <li key={attachment.id}>
+                      {attachment.file_type} ({attachment.original_filename})
+                      {userRole === 'Officer' &&
+                        !attachment.reviewed_by_officer.some((u) => u.id === 1) && ( // Replace 1 with actual user ID
+                          <button onClick={() => handleReviewAttachment(attachment.id)}>Review</button>
+                        )}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No attachments</p>
+              )}
             </div>
           ))}
-
-          <button type="submit">Submit</button>
-        </form>
+        </div>
       </div>
     </AppLayout>
   );
 };
 
 export default SubmitApplication;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

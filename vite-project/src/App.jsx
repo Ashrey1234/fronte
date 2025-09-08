@@ -1,51 +1,3 @@
-// import React from "react";
-// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-// import LoginPage from "./components/auth/LoginPage";
-// import RegisterPage from "./components/auth/RegisterPage";
-// import ForgotPasswordPage from "./components/auth/ForgotPasswordPage";
-// import ResetPasswordPage from "./components/auth/ResetPasswordPage";
-
-// // Baadaye uta-add dashboards yako
-// // import ResearcherDashboard from "./pages/researcher/Dashboard";
-// // import OfficerDashboard from "./pages/officer/Dashboard";
-// // import AdminDashboard from "./pages/admin/Dashboard";
-
-// function App() {
-//   // Temporary: check if user is logged in (example, replace with real auth)
-//   const isLoggedIn = false;
-
-//   return (
-//     <Router>
-//       <Routes>
-//         {/* Auth routes */}
-//         <Route path="/login" element={<LoginPage />} />
-//         <Route path="/register" element={<RegisterPage />} />
-//         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-//         <Route path="/reset-password" element={<ResetPasswordPage />} />
-
-//         {/* Redirect root to login if not logged in */}
-//         <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
-
-//         {/* Example of protected dashboard routes (replace later) */}
-//         {/* <Route path="/dashboard/researcher" element={<ResearcherDashboard />} />
-//         <Route path="/dashboard/officer" element={<OfficerDashboard />} />
-//         <Route path="/dashboard/admin" element={<AdminDashboard />} /> */}
-
-//         {/* 404 fallback */}
-//         <Route path="*" element={<div>404 - Page Not Found</div>} />
-//       </Routes>
-//     </Router>
-//   );
-// }
-
-// export default App;
-
-
-
-
-
-
-
 
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
@@ -127,56 +79,32 @@ function App() {
           }
         />
 
+
+        
+
         {/* 404 fallback */}
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
+
+
+              {/* <Route
+          path="/admindashboard"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />            */}
+
+
+
+
+
     </Router>
   );
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

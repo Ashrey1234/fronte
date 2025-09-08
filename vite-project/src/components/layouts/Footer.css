@@ -9,3 +9,36 @@
   font-size: 0.9rem;
   font-weight: bold;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Footer.css */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 320px;       /* nafasi ya sidebar */
+  right: 0;
+  height: 50px;
+  background: #1CA3DE;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}

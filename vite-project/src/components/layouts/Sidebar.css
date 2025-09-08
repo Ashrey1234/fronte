@@ -1,25 +1,3 @@
-/* 📁 src/components/layouts/Sidebar.css
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-  }
-  .sidebar.open {
-    transform: translateX(0);
-  }
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* Sidebar.css */
@@ -95,6 +73,9 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+
+
+
   .sidebar {
     transform: translateX(-100%);
   }
@@ -102,4 +83,54 @@
     transform: translateX(0);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Sidebar.css */
+.sidebar {
+  width: 320px;
+  background: #1CA3DE;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;            /* badala ya 60px */
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  transition: transform 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

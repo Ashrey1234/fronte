@@ -41,7 +41,10 @@ const StatsCards = ({ stats }) => {
 
   return (
     <div className="stats-section">
+      
       <h2 className="stats-title">Application Statistics</h2>
+       <h2 className="stats-title">Application Statistics</h2>
+       
       <div className="stats-grid">
         <div className="stat-card total">
           <div className="stat-icon">
