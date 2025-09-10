@@ -1,12 +1,4 @@
 
-
-
-
-
-
-
-
-
 // src/pages/researcher/TemplatesSection.jsx
 import React from "react";
 import "./TemplatesSection.css";

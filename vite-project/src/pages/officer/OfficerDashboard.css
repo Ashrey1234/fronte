@@ -1,0 +1,22 @@
+/* OfficerDashboard.css */
+.status-chip {
+  font-weight: bold;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.attachment-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.filter-chips {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}

@@ -29,10 +29,21 @@ const LoginPage = () => {
       const data = await res.json();
 
     if (res.ok && data.access) {
-  localStorage.setItem("access", data.access);
-  localStorage.setItem("refresh", data.refresh);
-  localStorage.setItem("username", username);
-  localStorage.setItem("role", data.role);
+  // localStorage.setItem("access", data.access);
+  // localStorage.setItem("refresh", data.refresh);
+  // localStorage.setItem("username", username);
+  // localStorage.setItem("role", data.role);
+
+
+ // Normalize role to lowercase
+        const role = data.role.toLowerCase();
+
+        localStorage.setItem("access", data.access);
+        localStorage.setItem("refresh", data.refresh);
+        localStorage.setItem("username", username);
+        localStorage.setItem("role", role);
+
+
 
   if (data.role === "Admin") {
     navigate("/admin-dashboard");
@@ -129,6 +140,10 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
+
+
 
 
 

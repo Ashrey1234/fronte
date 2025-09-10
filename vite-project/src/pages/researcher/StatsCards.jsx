@@ -43,7 +43,7 @@ const StatsCards = ({ stats }) => {
     <div className="stats-section">
       
       <h2 className="stats-title">Application Statistics</h2>
-       <h2 className="stats-title">Application Statistics</h2>
+       {/* <h2 className="stats-title">Application Statistics</h2> */}
        
       <div className="stats-grid">
         <div className="stat-card total">
@@ -91,3 +91,28 @@ const StatsCards = ({ stats }) => {
 };
 
 export default StatsCards;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
