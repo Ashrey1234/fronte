@@ -1,15 +1,32 @@
 RegisterPage.css
 
 /* Container for the form */
+
 .auth-form-container {
-  width: 100%;
-  max-width: 500px;
+  width: 95%;         /* inafika karibu full screen */
+  max-width: none;    /* hakuna kikomo */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 3rem;
   background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
+
+
+
+
+
+
+.auth-form-container {
+  width: 90%;
+  max-width: 800px;   /* imeongezeka kutoka 500px hadi 800px */
+  margin: 0 auto;
+  padding: 2.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
 
 /* Input wrapper with icon */
 .input-with-icon {

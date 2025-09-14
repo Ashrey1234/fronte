@@ -1,4 +1,10 @@
 /* src/components/StatsCards.css */
+
+
+
+
+
+
 .stats-section {
   margin: 30px auto;
   max-width: 1200px;
@@ -105,7 +111,7 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -123,4 +129,16 @@
   .stats-grid {
     grid-template-columns: 1fr;
   }
-}
+} 
+
+
+
+
+
+
+
+
+
+
+
+
