@@ -288,6 +288,7 @@ import OfficerDashboard from "./pages/officer/OfficerDashboard";
 import ReviewApplications from "./pages/officer/ReviewApplications";
 import OfficerProfile from "./pages/officer/OfficerProfile";
 
+// import Landing from './pages/Landing';
 // ProtectedRoute component
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -299,6 +300,7 @@ function App() {
     <Router>
       <Routes>
         {/* Auth routes */}
+        {/* <Route path="/" element={<Landing />} /> */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />

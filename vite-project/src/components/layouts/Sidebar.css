@@ -2,6 +2,13 @@
 
 /* Sidebar.css */
 
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+}
+
 .sidebar {
   width: 320px;
   background: #1CA3DE;
