@@ -49,7 +49,7 @@ const SubmitApplication = () => {
   });
 
   const [attachments, setAttachments] = useState([]);
-  const [newAttachment, setNewAttachment] = useState({ file_type: 'Makamu Form', file: null });
+  const [newAttachment, setNewAttachment] = useState({ file_type: 'Vice President Form', file: null });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -115,7 +115,7 @@ const SubmitApplication = () => {
       .then(res => res.ok ? res.json() : Promise.reject('Upload failed'))
       .then(data => {
         setAttachments(prev => [...prev, data]);
-        setNewAttachment({ file_type: 'Makamu Form', file: null });
+        setNewAttachment({ file_type: 'Vice President Form', file: null });
         document.getElementById('file-input').value = '';
         setMessage({ text: 'File uploaded successfully', severity: 'success' });
       })
@@ -134,7 +134,7 @@ const SubmitApplication = () => {
 
   const submitApplication = () => {
     if (!applicationId) return setMessage({ text: 'Save the application first', severity: 'warning' });
-    const requiredTypes = ['Makamu Form', 'Proposal', 'Ethical Form'];
+    const requiredTypes = ['Vice President Form', 'Proposal', 'Ethical Form'];
     const missing = requiredTypes.filter(t => !attachments.map(a => a.file_type).includes(t));
     if (missing.length) return setMessage({ text: `Missing attachments: ${missing.join(', ')}`, severity: 'warning' });
 
@@ -291,7 +291,7 @@ const SubmitApplication = () => {
                   <Grid container spacing={2} alignItems="center">
                     <Grid item xs={12} sm={4}>
                       <TextField fullWidth select label="Attachment Type" value={newAttachment.file_type} onChange={handleAttachmentTypeChange}>
-                        <MenuItem value="Makamu Form">Makamu Form</MenuItem>
+                        <MenuItem value="Vice President Form">Vice President Form</MenuItem>
                         <MenuItem value="Proposal">Proposal</MenuItem>
                         <MenuItem value="Ethical Form">Ethical Form</MenuItem>
                       </TextField>
